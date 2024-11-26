@@ -3,9 +3,8 @@ import { Field, Formik, Form, ErrorMessage } from 'formik'
 import { Button } from './Button'
 import Image from 'next/image'
 
-export function AddMenu() {
+export function AddMenu({ handleAddItem }) {
 	const validate = values => {
-		console.log('validate')
 		const errors = {}
 
 		if (!values.name) {
@@ -18,9 +17,20 @@ export function AddMenu() {
 
 		return errors
 	}
+
+	const onSubmit = values => {
+		const item = {
+			id: crypto.randomUUID(),
+			name: values.name,
+			link: values.link || '',
+			children: [],
+		}
+		handleAddItem(item)
+	}
+
 	return (
 		<div className='border rounded-md bg-white mx-5 py-5 px-6'>
-			<Formik initialValues={{ name: '', link: '' }} onSubmit={values => console.log(values)} validate={validate}>
+			<Formik initialValues={{ name: '', link: '' }} onSubmit={values => onSubmit(values)} validate={validate}>
 				{({ errors, touched, resetForm, setErrors, setTouched }) => (
 					<Form className='flex gap-4 items-start'>
 						<div className='flex flex-col gap-2 flex-1'>
@@ -64,10 +74,8 @@ export function AddMenu() {
 								</Button>
 							</div>
 						</div>
-						{console.log(errors)}
-						{console.log(touched)}
 						<Button
-                        type='button'
+							type='button'
 							className='w-10 px-[10px] py-[10px]'
 							imgBefore={<Image src='/trash.svg' alt='Trash Icon' width={20} height={20} />}
 							onClick={() => {
