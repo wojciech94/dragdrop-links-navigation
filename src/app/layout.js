@@ -1,4 +1,11 @@
 import './globals.css'
+import { Inter } from 'next/font/google'
+
+const inter = Inter({
+	style: ['normal'],
+	subsets: ['latin'],
+	weight: ['400', '500', '600'],
+})
 
 export const metadata = {
 	title: 'Droplo task',
@@ -8,7 +15,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang='en'>
-			<body>{children}</body>
+			<body className={inter.className}>{children}</body>
 		</html>
 	)
 }

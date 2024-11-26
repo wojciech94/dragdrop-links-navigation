@@ -1,4 +1,5 @@
+import { MenuManager } from './components/MenuManager'
 
 export default function Home() {
-	return <div></div>
+	return <MenuManager />
 }
