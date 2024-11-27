@@ -2,7 +2,7 @@ import { useDraggable, useDroppable } from '@dnd-kit/core'
 import Image from 'next/image'
 import { Button } from './Button'
 
-export function DragDropContainer({ id, name, link, children, extended }) {
+export function DragDropContainer({ id, name, link, children, extended, index }) {
 	const { setNodeRef: setDroppableRef } = useDroppable({ id })
 	const { attributes, listeners, setNodeRef: setDraggableRef, transform } = useDraggable({ id })
 
@@ -12,7 +12,8 @@ export function DragDropContainer({ id, name, link, children, extended }) {
 		  }
 		: undefined
 
-	const containerClass = extended ? 'border border-borderDark rounded-md' : 'ml-16 -my-[1px]'
+	const containerClass = extended ? '-mb-[1px]' : 'ml-16 -my-[1px]'
+	const containerBorderClass = extended && index && index !== 0 ? 'border-t' : ''
 
 	return (
 		<div
@@ -20,7 +21,7 @@ export function DragDropContainer({ id, name, link, children, extended }) {
 				setDroppableRef(node)
 				setDraggableRef(node)
 			}}
-			className={`${containerClass}`}
+			className={`${containerClass} ${containerBorderClass}`}
 			style={style}>
 			<div className='flex flex-col'>
 				<div
@@ -48,13 +49,6 @@ export function DragDropContainer({ id, name, link, children, extended }) {
 				</div>
 				{children}
 			</div>
-			{extended && (
-				<div className='p-6 bg-background border-t border-borderLight rounded-b-md'>
-					<Button type='submit' className='border px-[14px] py-[10px] font-semibold bg-white'>
-						Dodaj pozycję menu
-					</Button>
-				</div>
-			)}
 		</div>
 	)
 }

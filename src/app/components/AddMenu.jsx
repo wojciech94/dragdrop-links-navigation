@@ -3,7 +3,7 @@ import { Field, Formik, Form, ErrorMessage } from 'formik'
 import { Button } from './Button'
 import Image from 'next/image'
 
-export function AddMenu({ handleAddItem, handleShowAddMenu }) {
+export function AddMenu({ handleAddItem, handleShowAddMenu, className, id }) {
 	const validate = values => {
 		const errors = {}
 
@@ -25,11 +25,11 @@ export function AddMenu({ handleAddItem, handleShowAddMenu }) {
 			link: values.link || '',
 			children: [],
 		}
-		handleAddItem(item)
+		handleAddItem({ children: [item], id: crypto.randomUUID() })
 	}
 
 	return (
-		<div className='border rounded-md bg-white mx-5 py-5 px-6'>
+		<div className={`${className} border rounded-md bg-white mx-5 py-5 px-6`}>
 			<Formik initialValues={{ name: '', link: '' }} onSubmit={values => onSubmit(values)} validate={validate}>
 				{({ errors, touched, resetForm, setErrors, setTouched }) => (
 					<Form className='flex gap-4 items-start'>
@@ -68,7 +68,7 @@ export function AddMenu({ handleAddItem, handleShowAddMenu }) {
 								<ErrorMessage name='link' component='div' className='text-red-700' />
 							</div>
 							<div className='flex gap-2 mt-3 font-semibold'>
-								<Button className='border px-[14px] py-[10px]' onClick={() => handleShowAddMenu(false)}>
+								<Button type='button' className='border px-[14px] py-[10px]' onClick={() => handleShowAddMenu(id)}>
 									Anuluj
 								</Button>
 								<Button type='submit' className='border px-[14px] py-[10px] text-primaryDarker'>
