@@ -7,7 +7,8 @@
 	--foreground: #171717;
 	--primary: #7f56d9;
 	--primaryDarker: #6941c6;
-	--borderColor: #eaece0;
+	--borderLight: #eaecf0;
+	--borderDark: #d0d5dd;
 	--tertiary: #475467;
 }
 
@@ -23,4 +24,3 @@ body {
 	background: var(--background);
 	font-family: Arial, Helvetica, sans-serif;
 }
-

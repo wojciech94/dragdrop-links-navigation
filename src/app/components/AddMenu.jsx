@@ -3,7 +3,7 @@ import { Field, Formik, Form, ErrorMessage } from 'formik'
 import { Button } from './Button'
 import Image from 'next/image'
 
-export function AddMenu({ handleAddItem }) {
+export function AddMenu({ handleAddItem, handleShowAddMenu }) {
 	const validate = values => {
 		const errors = {}
 
@@ -68,7 +68,9 @@ export function AddMenu({ handleAddItem }) {
 								<ErrorMessage name='link' component='div' className='text-red-700' />
 							</div>
 							<div className='flex gap-2 mt-3 font-semibold'>
-								<Button className='border px-[14px] py-[10px]'>Anuluj</Button>
+								<Button className='border px-[14px] py-[10px]' onClick={() => handleShowAddMenu(false)}>
+									Anuluj
+								</Button>
 								<Button type='submit' className='border px-[14px] py-[10px] text-primaryDarker'>
 									Dodaj
 								</Button>
