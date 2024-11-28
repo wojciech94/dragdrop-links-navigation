@@ -7,7 +7,6 @@ export function MenuBox({ data }) {
 	const [showAddItem, setShowAddItem] = useState(() => Object.fromEntries(data.map(d => [d.id, false])))
 
 	const toggleShowAddItem = id => {
-		console.log(id)
 		setShowAddItem(prev => ({ ...prev, [id]: !prev[id] }))
 	}
 
@@ -20,7 +19,7 @@ export function MenuBox({ data }) {
 				data.map(d => (
 					<div key={d.id} className={containerClass}>
 						<RecursiveMenu data={d.children} extended></RecursiveMenu>
-						{showAddItem[d.id] && <AddMenu className='my-5' handleShowAddMenu={toggleShowAddItem} id={d.id} />}
+						{showAddItem[d.id] && <AddMenu className='my-5' handleShowAddMenu={toggleShowAddItem} nodeId={d.id} />}
 						<MenuFooter id={d.id} handleShowAddItem={toggleShowAddItem} />
 					</div>
 				))}

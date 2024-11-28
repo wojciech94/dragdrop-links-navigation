@@ -2,8 +2,14 @@
 import { Field, Formik, Form, ErrorMessage } from 'formik'
 import { Button } from './Button'
 import Image from 'next/image'
+import { useContext } from 'react'
+import { UpdateMenuItemContext } from '../contexts/UpdateMenuItemContext'
+import { getNodeById } from '../lib/helpers'
 
-export function AddMenu({ handleAddItem, handleShowAddMenu, className, id }) {
+export function AddMenu({ handleShowAddMenu, className, nodeId, isEdit }) {
+	const [data, handleSetData] = useContext(UpdateMenuItemContext)
+	const node = getNodeById(data, nodeId)
+
 	const validate = values => {
 		const errors = {}
 
@@ -19,19 +25,24 @@ export function AddMenu({ handleAddItem, handleShowAddMenu, className, id }) {
 	}
 
 	const onSubmit = values => {
-		const item = {
-			id: crypto.randomUUID(),
-			name: values.name,
-			link: values.link || '',
-			children: [],
-		}
-		handleAddItem({ children: [item], id: crypto.randomUUID() })
+		const item = isEdit
+			? node
+			: {
+					id: crypto.randomUUID(),
+					children: [],
+			  }
+		item.name = values.name
+		item.link = values.link
+		handleSetData(item, nodeId, isEdit)
+		handleShowAddMenu(nodeId, isEdit)
 	}
+
+	const initValues = { name: (isEdit && node?.name) || '', link: (isEdit && node?.link) || '' }
 
 	return (
 		<div className={`${className} border rounded-md bg-white mx-5 py-5 px-6`}>
-			<Formik initialValues={{ name: '', link: '' }} onSubmit={values => onSubmit(values)} validate={validate}>
-				{({ errors, touched, resetForm, setErrors, setTouched }) => (
+			<Formik initialValues={initValues} onSubmit={values => onSubmit(values)} validate={validate}>
+				{({ errors, touched, setErrors, setTouched, setValues }) => (
 					<Form className='flex gap-4 items-start'>
 						<div className='flex flex-col gap-2 flex-1'>
 							<div className='flex flex-col gap-[6px]'>
@@ -68,11 +79,11 @@ export function AddMenu({ handleAddItem, handleShowAddMenu, className, id }) {
 								<ErrorMessage name='link' component='div' className='text-red-700' />
 							</div>
 							<div className='flex gap-2 mt-3 font-semibold'>
-								<Button type='button' className='border px-[14px] py-[10px]' onClick={() => handleShowAddMenu(id)}>
+								<Button type='button' className='border px-[14px] py-[10px]' onClick={() => handleShowAddMenu(nodeId)}>
 									Anuluj
 								</Button>
 								<Button type='submit' className='border px-[14px] py-[10px] text-primaryDarker'>
-									Dodaj
+									{isEdit ? 'Zapisz' : 'Dodaj'}
 								</Button>
 							</div>
 						</div>
@@ -81,7 +92,7 @@ export function AddMenu({ handleAddItem, handleShowAddMenu, className, id }) {
 							className='w-10 px-[10px] py-[10px]'
 							imgBefore={<Image src='/trash.svg' alt='Trash Icon' width={20} height={20} />}
 							onClick={() => {
-								resetForm()
+								setValues({ name: '', link: '' })
 								setErrors({})
 								setTouched({})
 							}}

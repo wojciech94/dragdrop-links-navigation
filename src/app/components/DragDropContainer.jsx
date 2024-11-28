@@ -1,10 +1,16 @@
 import { useDraggable, useDroppable } from '@dnd-kit/core'
 import Image from 'next/image'
+import { useState } from 'react'
+import { AddMenu } from './AddMenu'
 import { Button } from './Button'
+import { useContext } from 'react'
+import { UpdateMenuItemContext } from '../contexts/UpdateMenuItemContext'
 
 export function DragDropContainer({ id, name, link, children, extended, index }) {
 	const { setNodeRef: setDroppableRef } = useDroppable({ id })
 	const { attributes, listeners, setNodeRef: setDraggableRef, transform } = useDraggable({ id })
+	const [showAddItem, setShowAddItem] = useState({ state: false, isEdit: false })
+	const [, , handleRemoveItem] = useContext(UpdateMenuItemContext)
 
 	const style = transform
 		? {
@@ -36,17 +42,28 @@ export function DragDropContainer({ id, name, link, children, extended, index })
 						{link && <div>{link}</div>}
 					</div>
 					<div className='flex border rounded-md text-sm font-semibold'>
-						<Button type='button' className='border-r rounded-none py-2'>
+						<Button type='button' className='border-r rounded-none py-2' onClick={() => handleRemoveItem(id)}>
 							Usuń
 						</Button>
-						<Button type='button' className='border-r rounded-none py-2'>
+						<Button
+							type='button'
+							className='border-r rounded-none py-2'
+							onClick={() => setShowAddItem({ state: true, isEdit: true })}>
 							Edytuj
 						</Button>
-						<Button type='button' className='py-2'>
+						<Button type='button' className='py-2' onClick={() => setShowAddItem({ state: true, isEdit: false })}>
 							Dodaj pozycję menu
 						</Button>
 					</div>
 				</div>
+				{showAddItem.state === true && (
+					<AddMenu
+						className='my-5'
+						nodeId={id}
+						handleShowAddMenu={() => setShowAddItem({ state: false, isEdit: false })}
+						isEdit={showAddItem.isEdit}
+					/>
+				)}
 				{children}
 			</div>
 		</div>
