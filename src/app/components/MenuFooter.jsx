@@ -6,10 +6,10 @@ export function MenuFooter({ id, handleShowAddItem }) {
 
 	return (
 		<>
-			<div ref={setNodeRef} className='p-6 bg-background border-t border-borderLight rounded-b-md'>
+			<div ref={setNodeRef} className='px-6 py-5 bg-background border-t border-borderLight rounded-b-md'>
 				<Button
 					type='submit'
-					className='border px-[14px] py-[10px] font-semibold bg-white'
+					className='border px-[13px] py-[9px] font-semibold bg-white'
 					onClick={() => handleShowAddItem(id)}>
 					Dodaj pozycję menu
 				</Button>

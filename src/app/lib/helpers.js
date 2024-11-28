@@ -1,4 +1,26 @@
+const isValidData = data => {
+	return data && Array.isArray(data) && data.length > 0
+}
+
+const isValidId = id => {
+	return id && typeof id === 'string'
+}
+
+const isValidItem = item => {
+	return item !== null && typeof item === 'object' && !Array.isArray(item)
+}
+
 export function getNodeById(data, id) {
+	if (!isValidId(id)) {
+		console.error('No id provided')
+		return null
+	}
+
+	if (!isValidData(data)) {
+		console.error('Invalid data')
+		return null
+	}
+
 	let fnode = null
 	const findItem = nodes => {
 		for (const node of nodes) {
@@ -16,6 +38,16 @@ export function getNodeById(data, id) {
 }
 
 const findAndRemove = (nodes, id) => {
+	if (!isValidId(id)) {
+		console.error('No id provided')
+		return null
+	}
+
+	if (!isValidData(nodes)) {
+		console.error('Invalid data')
+		return null
+	}
+
 	for (let i = 0; i < nodes.length; i++) {
 		if (nodes[i].id === id) {
 			const removedItem = nodes.splice(i, 1)[0]
@@ -34,6 +66,11 @@ const findAndRemove = (nodes, id) => {
 }
 
 const cleanEmptyNodes = nodes => {
+	if (!isValidData(nodes)) {
+		console.error('Invalid data')
+		return null
+	}
+
 	for (let i = 0; i < nodes.length; i++) {
 		if (nodes[i].children && nodes[i].children.length === 0) {
 			nodes.splice(i, 1)
@@ -43,7 +80,21 @@ const cleanEmptyNodes = nodes => {
 }
 
 export function moveItemInTree(tree, setData, activeId, overId) {
-	const treeCopy = [...tree]
+	if (!isValidId(overId)) {
+		console.error('No overid found')
+		return null
+	}
+
+	if (!isValidId(activeId)) {
+		console.error('No activeid found')
+		return null
+	}
+
+	if (!isValidData(tree)) {
+		console.error('Invalid data')
+		return null
+	}
+
 	const insertItem = (nodes, id, item) => {
 		for (const node of nodes) {
 			if (node.id === id) {
@@ -59,26 +110,51 @@ export function moveItemInTree(tree, setData, activeId, overId) {
 		return false
 	}
 
-	const item = findAndRemove(treeCopy, activeId)
+	const item = findAndRemove(tree, activeId)
 	if (item) {
-		insertItem(treeCopy, overId, item)
+		insertItem(tree, overId, item)
+	} else {
+		console.error('Item not found')
 	}
-	cleanEmptyNodes(treeCopy)
+	cleanEmptyNodes(tree)
 
-	setData([...treeCopy])
+	setData([...tree])
 }
 
 export function removeItem(nodes, setNodes, id) {
+	if (!isValidId(id)) {
+		console.error('No id provided')
+		return null
+	}
+
+	if (!isValidData(nodes)) {
+		console.error('Invalid data')
+		return null
+	}
+
 	findAndRemove(nodes, id)
 	cleanEmptyNodes(nodes)
 	setNodes([...nodes])
 }
 
 export function updateItem(data, setData, item) {
+	if (!isValidData(nodes)) {
+		console.error('Invalid data')
+		return null
+	}
+
+	if (!isValidItem(item)) {
+		console.error('Invalid item')
+		return null
+	}
+
+	let itemUpdated = false
 	const findItemToUpdate = nodes => {
 		for (let node of nodes) {
 			if (node.id === item.id) {
 				node = item
+				itemUpdated = true
+				return
 			} else {
 				findItemToUpdate(node.children)
 			}
@@ -86,10 +162,24 @@ export function updateItem(data, setData, item) {
 	}
 
 	findItemToUpdate(data)
-	setData(prevData => [...prevData])
+	if (itemUpdated) {
+		setData(prevData => [...prevData])
+	} else {
+		console.warn('Data update failed. Item not found')
+	}
 }
 
 export function insertNewItem(data, setData, item, parentId) {
+	if (!isValidItem(item)) {
+		console.error('Invalid item')
+		return null
+	}
+
+	if (!isValidData(data)) {
+		console.error('Invalid data')
+		return null
+	}
+
 	if (!parentId) {
 		const newItem = {
 			children: [item],
@@ -98,10 +188,14 @@ export function insertNewItem(data, setData, item, parentId) {
 		setData(prevData => [...prevData, newItem])
 		return
 	}
+
+	let parentFound = false
 	const findParentInNodes = nodes => {
 		for (const node of nodes) {
 			if (node.id === parentId) {
 				node.children.push(item)
+				parentFound = true
+				return
 			} else {
 				findParentInNodes(node.children)
 			}
@@ -109,5 +203,9 @@ export function insertNewItem(data, setData, item, parentId) {
 	}
 
 	findParentInNodes(data)
-	setData([...data])
+	if (parentFound) {
+		setData([...data])
+	} else {
+		console.warn('Cannot add item. Parent not found.')
+	}
 }

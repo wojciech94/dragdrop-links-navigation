@@ -19,7 +19,7 @@ export function MenuBox({ data }) {
 				data.map(d => (
 					<div key={d.id} className={containerClass}>
 						<RecursiveMenu data={d.children} extended></RecursiveMenu>
-						{showAddItem[d.id] && <AddMenu className='my-5' handleShowAddMenu={toggleShowAddItem} nodeId={d.id} />}
+						{showAddItem[d.id] && <AddMenu className='mx-6 my-4' handleShowAddMenu={toggleShowAddItem} nodeId={d.id} />}
 						<MenuFooter id={d.id} handleShowAddItem={toggleShowAddItem} />
 					</div>
 				))}

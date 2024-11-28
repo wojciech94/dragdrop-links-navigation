@@ -31,7 +31,7 @@ export function DragDropContainer({ id, name, link, children, extended, index })
 			style={style}>
 			<div className='flex flex-col'>
 				<div
-					className={`flex items-start gap-2 p-6 bg-white ${
+					className={`flex items-start gap-2 px-6 py-4 bg-white ${
 						extended ? 'border-b rounded-t-md' : 'rounded-es-md border-l border-t border-b'
 					}`}>
 					<button {...listeners} className='cursor-move p-[10px]' {...attributes}>
@@ -42,23 +42,29 @@ export function DragDropContainer({ id, name, link, children, extended, index })
 						{link && <div>{link}</div>}
 					</div>
 					<div className='flex border rounded-md text-sm font-semibold'>
-						<Button type='button' className='border-r rounded-none py-2' onClick={() => handleRemoveItem(id)}>
+						<Button
+							type='button'
+							className='border-r rounded-none px-[13px] py-[9px]'
+							onClick={() => handleRemoveItem(id)}>
 							Usuń
 						</Button>
 						<Button
 							type='button'
-							className='border-r rounded-none py-2'
+							className='border-r rounded-none px-[13px] py-[9px]'
 							onClick={() => setShowAddItem({ state: true, isEdit: true })}>
 							Edytuj
 						</Button>
-						<Button type='button' className='py-2' onClick={() => setShowAddItem({ state: true, isEdit: false })}>
+						<Button
+							type='button'
+							className='px-[13px] py-[9px]'
+							onClick={() => setShowAddItem({ state: true, isEdit: false })}>
 							Dodaj pozycję menu
 						</Button>
 					</div>
 				</div>
 				{showAddItem.state === true && (
 					<AddMenu
-						className='my-5'
+						className='ml-16 mr-6 my-4'
 						nodeId={id}
 						handleShowAddMenu={() => setShowAddItem({ state: false, isEdit: false })}
 						isEdit={showAddItem.isEdit}

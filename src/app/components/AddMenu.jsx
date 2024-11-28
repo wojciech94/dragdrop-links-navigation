@@ -53,7 +53,9 @@ export function AddMenu({ handleShowAddMenu, className, nodeId, isEdit }) {
 									name='name'
 									type='text'
 									placeholder='np. Promocje'
-									className={`${errors.name && touched.name ? 'border-red-700' : ''} border rounded-md px-3 py-2`}
+									className={`${
+										errors.name && touched.name ? 'border-red-700' : ''
+									} border rounded-md px-3 py-2 placeholder-placeholderColor`}
 								/>
 								<ErrorMessage name='name' component='div' className='text-red-700' />
 							</div>
@@ -73,16 +75,16 @@ export function AddMenu({ handleShowAddMenu, className, nodeId, isEdit }) {
 										placeholder='Wklej lub wyszukaj'
 										className={`${
 											errors.link && touched.link ? 'border-red-700' : ''
-										} border rounded-md px-3 py-2 w-full pl-8 items-center`}
+										} border rounded-md px-3 py-2 w-full pl-8 items-center placeholder-placeholderColor`}
 									/>
 								</div>
 								<ErrorMessage name='link' component='div' className='text-red-700' />
 							</div>
 							<div className='flex gap-2 mt-3 font-semibold'>
-								<Button type='button' className='border px-[14px] py-[10px]' onClick={() => handleShowAddMenu(nodeId)}>
+								<Button type='button' className='border px-[13px] py-[9px]' onClick={() => handleShowAddMenu(nodeId)}>
 									Anuluj
 								</Button>
-								<Button type='submit' className='border px-[14px] py-[10px] text-primaryDarker'>
+								<Button type='submit' className='border px-[13px] py-[9px] text-primaryDarker'>
 									{isEdit ? 'Zapisz' : 'Dodaj'}
 								</Button>
 							</div>
