@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# System Zarządzania Nawigacją
 
-## Getting Started
+Aplikacja webowa umożliwiająca zarządzanie elementami nawigacji za pomocą intuicyjnego interfejsu drag & drop.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## **Podgląd aplikacji**
+**Link do aplikacji:** [System zarządzania nawigacją](https://dragdrop-links-navigation.vercel.app/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## **Funkcjonalności**
+1. **Lista nawigacji:**
+   - Wyświetla listę elementów nawigacji z nazwami (label) i adresami URL.
+   - Umożliwia reorganizację elementów za pomocą drag & drop.
+   - Każdy element umożliwia edycję swoich danych, usunięcie oraz podpiecie do siebie dodatkowej nawigacji.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+2. **Formularz dodawania nawigacji:**
+   - Pozwala dodać nowe elementy nawigacji z następującymi polami:
+     - **Nazwa:** Nazwa elementu nawigacji.
+     - **URL:** Adres URL przypisany do elementu.
+     - **Pod-elementy:** Możliwość dodawania zagnieżdżonych pod-elementów.
+   - Walidacja pól:
+     - Pole `label` jest wymagane.
+     - Pole `url`, jeśli wypełnione, musi być poprawnym adresem URL.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. **Formularz edycji nawigacji:**
+   - Pozwala edytować istniejące elementy nawigacji, w tym ich pod-elementy.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## **Technologie użyte w projekcie**
+- **Framework frontendowy:** [Next.js](https://nextjs.org/)
+- **Stylizacja:** [Tailwind CSS](https://tailwindcss.com/)
+- **Drag & Drop:** [dnd-kit](https://dndkit.com/)
+- **Formularze i walidacja:** [Formik](https://formik.org/)
+- **Zarządzanie stanem:** Lokalny stan przy użyciu hooków React.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## **Instalacja**
+### Wymagania wstępne
+- Node.js (>= 16.x.x)
+- Menedżer pakietów: npm lub yarn
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Kroki instalacji
+1. Sklonuj repozytorium:
+   ```bash
+   git clone https://github.com/wojciech94/dragdrop-links-navigation.git
+   ```
+2. Przejdź do folderu projektu
+   ```bash
+   cd dragdrop-links-navigation
+   ```
+3. Zainstaluj dependencies
+    ```bash
+   npm install
+   ```
+4. Uruchom server developerski
+    ```bash
+   npm run dev
+   ```
+5. Przejdź na adres [http://localhost:3000](http://localhost:3000) w przeglądarce
