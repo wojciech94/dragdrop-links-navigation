@@ -1,5 +1,5 @@
 const isValidData = data => {
-	return data && Array.isArray(data) && data.length > 0
+	return data !== null && Array.isArray(data)
 }
 
 const isValidId = id => {
@@ -12,12 +12,11 @@ const isValidItem = item => {
 
 export function getNodeById(data, id) {
 	if (!isValidId(id)) {
-		console.error('No id provided')
-		return null
+		console.warn('Invalid or missing id.')
 	}
 
 	if (!isValidData(data)) {
-		console.error('Invalid data')
+		console.warn('Invalid or missing data.')
 		return null
 	}
 
@@ -39,12 +38,12 @@ export function getNodeById(data, id) {
 
 const findAndRemove = (nodes, id) => {
 	if (!isValidId(id)) {
-		console.error('No id provided')
+		console.warn('Invalid or missing id.')
 		return null
 	}
 
 	if (!isValidData(nodes)) {
-		console.error('Invalid data')
+		console.warn('Invalid or missing data.')
 		return null
 	}
 
@@ -67,7 +66,7 @@ const findAndRemove = (nodes, id) => {
 
 const cleanEmptyNodes = nodes => {
 	if (!isValidData(nodes)) {
-		console.error('Invalid data')
+		console.warn('Invalid or missing data.')
 		return null
 	}
 
@@ -81,17 +80,17 @@ const cleanEmptyNodes = nodes => {
 
 export function moveItemInTree(tree, setData, activeId, overId) {
 	if (!isValidId(overId)) {
-		console.error('No overid found')
+		console.warn('No overid found')
 		return null
 	}
 
 	if (!isValidId(activeId)) {
-		console.error('No activeid found')
+		console.warn('No activeid found')
 		return null
 	}
 
 	if (!isValidData(tree)) {
-		console.error('Invalid data')
+		console.warn('Invalid or missing data.')
 		return null
 	}
 
@@ -114,7 +113,7 @@ export function moveItemInTree(tree, setData, activeId, overId) {
 	if (item) {
 		insertItem(tree, overId, item)
 	} else {
-		console.error('Item not found')
+		console.warn('Item not found')
 	}
 	cleanEmptyNodes(tree)
 
@@ -123,12 +122,12 @@ export function moveItemInTree(tree, setData, activeId, overId) {
 
 export function removeItem(nodes, setNodes, id) {
 	if (!isValidId(id)) {
-		console.error('No id provided')
+		console.warn('Invalid or missing id.')
 		return null
 	}
 
 	if (!isValidData(nodes)) {
-		console.error('Invalid data')
+		console.warn('Invalid or missing data.')
 		return null
 	}
 
@@ -137,14 +136,14 @@ export function removeItem(nodes, setNodes, id) {
 	setNodes([...nodes])
 }
 
-export function updateItem(data, setData, item) {
+export function updateItem(nodes, setData, item) {
 	if (!isValidData(nodes)) {
-		console.error('Invalid data')
+		console.warn('Invalid or missing data.')
 		return null
 	}
 
 	if (!isValidItem(item)) {
-		console.error('Invalid item')
+		console.warn('Invalid item')
 		return null
 	}
 
@@ -161,7 +160,7 @@ export function updateItem(data, setData, item) {
 		}
 	}
 
-	findItemToUpdate(data)
+	findItemToUpdate(nodes)
 	if (itemUpdated) {
 		setData(prevData => [...prevData])
 	} else {
@@ -171,12 +170,12 @@ export function updateItem(data, setData, item) {
 
 export function insertNewItem(data, setData, item, parentId) {
 	if (!isValidItem(item)) {
-		console.error('Invalid item')
+		console.warn('Invalid item')
 		return null
 	}
 
 	if (!isValidData(data)) {
-		console.error('Invalid data')
+		console.warn('Invalid or missing data.')
 		return null
 	}
 
